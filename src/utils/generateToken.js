@@ -6,8 +6,8 @@ const generateToken = (res, userId) => {
 
     res.cookie("jwt", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV !== "development",
-        sameSite: "lax", // Strict can cause issues with ngrok/proxies in dev
+        secure: process.env.NODE_ENV !== "development", // Must be true for SameSite=None
+        sameSite: process.env.NODE_ENV === "development" ? "lax" : "none", // None is required for cross-site
         maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
     });
 };

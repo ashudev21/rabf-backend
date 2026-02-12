@@ -1,1 +1,3 @@
-export const REDIS_URL = "rediss://default:AVNS_lBWO56cCZYw0oQY5iJp@db-valkey-blr1-10247-do-user-17062973-0.f.db.ondigitalocean.com:25061";
+import { _config } from "./config.js";
+
+export const REDIS_URL =_config.REDIS_URL;

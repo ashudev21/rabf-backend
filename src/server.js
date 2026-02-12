@@ -21,7 +21,7 @@ const app = express();
 const server = http.createServer(app);
 
 app.use(cors({
-    origin: ["http://localhost:5173", "http://127.0.0.1:5173"],
+    origin: ["http://localhost:5173", "http://127.0.0.1:5173", "https://1b70-122-252-249-114.ngrok-free.app"],
     credentials: true
 }));
 
@@ -41,6 +41,8 @@ import chatRoutes from "./routes/chatRoutes.js";
 import notificationRoutes from "./routes/notificationRoutes.js";
 import "./queue/worker.js"; // Start Email Worker
 
+import reviewRoutes from "./routes/reviewRoutes.js";
+
 app.use("/api/auth", authRoutes);
 app.use("/api/boyfriends", boyfriendRoutes);
 app.use("/api/bookings", bookingRoutes);
@@ -48,6 +50,7 @@ app.use("/api/chats", chatRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/notifications", notificationRoutes);
+app.use("/api/reviews", reviewRoutes);
 
 server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

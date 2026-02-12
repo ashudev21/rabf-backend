@@ -303,8 +303,8 @@ const checkAuth = async (req, res) => {
             isAccountVerified: req.user.isAccountVerified,
         });
     } else {
-        res.status(401);
-        throw new Error("Not authorized");
+        // Send 401 but do not throw an Error (avoids stack trace in logs)
+        res.status(401).json({ message: "Not authorized" });
     }
 };
 

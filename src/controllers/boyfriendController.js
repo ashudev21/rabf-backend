@@ -32,12 +32,32 @@ const getBoyfriends = async (req, res) => {
         query.name = { $regex: search, $options: "i" };
     }
 
-    const count = await Boyfriend.countDocuments(query);
-    const boyfriends = await Boyfriend.find(query)
+    // Clone query for counting
+    let countQuery = JSON.parse(JSON.stringify(query));
+
+    // Replace $near with $geoWithin for count (since count doesn't support $near sort)
+    if (lat && lng && dist) {
+        delete countQuery.location.$near;
+        countQuery.location.$geoWithin = {
+            $centerSphere: [
+                [parseFloat(lng), parseFloat(lat)],
+                parseInt(dist) / 6378.1 // Convert km to radians
+            ]
+        };
+    }
+
+    const count = await Boyfriend.countDocuments(countQuery);
+    let queryBuilder = Boyfriend.find(query)
         .populate("user", "name isVerified profileImage")
         .limit(limit * 1)
-        .skip((page - 1) * limit)
-        .sort({ createdAt: -1 });
+        .skip((page - 1) * limit);
+
+    // Only apply sort if NOT using $near (which sorts by distance automatically)
+    if (!dist) {
+        queryBuilder = queryBuilder.sort({ createdAt: -1 });
+    }
+
+    const boyfriends = await queryBuilder;
 
     res.json({
         boyfriends,
@@ -97,6 +117,12 @@ const createBoyfriend = async (req, res) => {
     if (boyfriendExists) {
         res.status(400);
         throw new Error("User already has a boyfriend profile");
+    }
+
+    // Validate Age
+    if (!age || age < 18 || age > 70) {
+        res.status(400);
+        throw new Error("Age must be between 18 and 70");
     }
 
     // Ensure valid coordinates or default to [0,0] if missing (prevent NaN cast error)

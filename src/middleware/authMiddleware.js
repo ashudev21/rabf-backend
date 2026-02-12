@@ -34,6 +34,26 @@ const protect = async (req, res, next) => {
     }
 };
 
+const protectSilent = async (req, res, next) => {
+    let token;
+    token = req.cookies.jwt;
+
+    if (token) {
+        try {
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            req.user = await User.findById(decoded.userId).select("-password");
+        } catch (error) {
+            // Token invalid or user not found, just proceed as guest
+            req.user = null;
+            // Optionally clear cookie if invalid?
+            // res.clearCookie('jwt'); 
+            // Better not to mess with cookies in silent mode unless sure
+        }
+    }
+    // If no token, just proceed with req.user = undefined/null
+    next();
+};
+
 const admin = (req, res, next) => {
     if (req.user && req.user.role === "admin") {
         next();
@@ -43,4 +63,4 @@ const admin = (req, res, next) => {
     }
 };
 
-export { protect, admin };
+export { protect, protectSilent, admin };

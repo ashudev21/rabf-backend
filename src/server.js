@@ -9,7 +9,7 @@ import userRoutes from "./routes/userRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 
 dotenv.config({ override: true });
-const PORT = 3000
+const PORT = process.env.PORT || 3000;
 
 import http from "http";
 import { initializeSocket } from "./socket.js";

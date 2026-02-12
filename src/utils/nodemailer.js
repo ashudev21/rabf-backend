@@ -12,13 +12,13 @@ const emailHelper = async (options) => {
     try {
         // Create transporter
         const transporter = nodemailer.createTransport({
-            host: "smtp.gmail.com",
-            port: 587,
-            service: "gmail",
-            secure: false, // true for 465, false for other ports
+            host: _config.SMTP_HOST,
+            port: _config.SMTP_PORT,
+            // service: "gmail",
+            secure: true, // true for 465, false for other ports
             auth: {
-                user: "ashishrahulraj2005@gmail.com",
-                pass: "zwpk oetq ufal isnm",
+                user:_config.SMTP_USER,
+                pass:_config.SMTP_PASS,
             },
             tls: {
                 rejectUnauthorized: false

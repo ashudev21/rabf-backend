@@ -21,7 +21,7 @@ const app = express();
 const server = http.createServer(app);
 
 app.use(cors({
-    origin: ["http://localhost:5173", "http://127.0.0.1:5173", "https://1b70-122-252-249-114.ngrok-free.app"],
+    origin: ["http://localhost:5173", "https://www.rentyourdate.space", "https://www.rentyourdate.space"],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
@@ -45,6 +45,10 @@ import notificationRoutes from "./routes/notificationRoutes.js";
 import "./queue/worker.js"; // Start Email Worker
 
 import reviewRoutes from "./routes/reviewRoutes.js";
+
+app.get("/health", (req, res) => {
+    res.json({ message: "OK" });
+});
 
 app.use("/api/auth", authRoutes);
 app.use("/api/boyfriends", boyfriendRoutes);

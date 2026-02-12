@@ -13,7 +13,7 @@ let io;
 export const initializeSocket = async (httpServer) => {
     io = new Server(httpServer, {
         cors: {
-            origin: process.env.FRONTEND_URL || "http://localhost:5173",
+            origin: [process.env.FRONTEND_URL || "http://localhost:5173", "https://www.rentyourdate.space", "https://rentyourdate.space"],
             credentials: true,
             methods: ["GET", "POST"]
         }

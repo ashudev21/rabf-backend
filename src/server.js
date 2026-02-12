@@ -18,6 +18,7 @@ import { initNotificationService } from "./services/notificationService.js";
 import cors from "cors";
 
 const app = express();
+app.set("trust proxy", 1); // Trust first proxy (DigitalOcean/Vercel) for secure cookies
 const server = http.createServer(app);
 
 app.use(cors({

@@ -22,7 +22,10 @@ const server = http.createServer(app);
 
 app.use(cors({
     origin: ["http://localhost:5173", "http://127.0.0.1:5173", "https://1b70-122-252-249-114.ngrok-free.app"],
-    credentials: true
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+    exposedHeaders: ["Content-Range", "X-Content-Range"],
 }));
 
 app.use(express.json());

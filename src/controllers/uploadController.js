@@ -29,14 +29,4 @@ const uploadFile = async (req, res) => {
     }
 };
 
-const getUploadAuth = (req, res) => {
-    try {
-        const result = imagekit.getAuthenticationParameters();
-        res.json(result);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Failed to get auth parameters" });
-    }
-};
-
-export { uploadFile, getUploadAuth };
+export { uploadFile };

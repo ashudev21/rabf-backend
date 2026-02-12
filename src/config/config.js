@@ -3,11 +3,11 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const _config = {
-    SMTP_HOST: (process.env.SMTP_HOST || "").replace(/["',]/g, ""),
-    SMTP_PORT: (process.env.SMTP_PORT || "587").replace(/["',]/g, ""),
-    SMTP_SERVICE: (process.env.SMTP_SERVICE || "").replace(/["',]/g, ""),
-    SMTP_USER: (process.env.SMTP_USER || "").replace(/["',]/g, ""),
-    SMTP_PASS: (process.env.SMTP_PASS || "zwpk oetq ufal isnm").replace(/["',]/g, ""), // Fallback to hardcoded if env missing
+    SMTP_HOST: process.env.SMTP_HOST,
+    SMTP_PORT: process.env.SMTP_PORT,
+    SMTP_SERVICE: process.env.SMTP_SERVICE,
+    SMTP_USER: process.env.SMTP_USER,
+    SMTP_PASS: process.env.SMTP_PASS,
 
     PORT: process.env.PORT,
     MONGO_URI: process.env.MONGO_URI,

@@ -64,7 +64,7 @@ const registerUser = async (req, res) => {
 
         // Generate Verification Token
         const verificationToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
-        const verificationUrl = `${process.env.CLIENT_URL || 'http://localhost:5173'}/verify-email?token=${verificationToken}`;
+        const verificationUrl = `${process.env.CLIENT_URL}/verify-email?token=${verificationToken}`;
 
         // Send Verification Email
         await addEmailToQueue({
@@ -156,7 +156,7 @@ const resendVerificationEmail = async (req, res) => {
     }
 
     const verificationToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
-    const verificationUrl = `${process.env.CLIENT_URL || 'http://localhost:5173'}/verify-email?token=${verificationToken}`;
+    const verificationUrl = `${process.env.CLIENT_URL}/verify-email?token=${verificationToken}`;
 
     await addEmailToQueue({
         email: user.email,
@@ -185,7 +185,7 @@ const forgotPassword = async (req, res) => {
 
     // Generate Reset Token (Short lived: 10 mins)
     const resetToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '10m' });
-    const resetUrl = `${process.env.CLIENT_URL || 'http://localhost:5173'}/reset-password?token=${resetToken}`;
+    const resetUrl = `${process.env.CLIENT_URL}/reset-password?token=${resetToken}`;
 
     await addEmailToQueue({
         email: user.email,

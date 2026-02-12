@@ -22,7 +22,7 @@ app.set("trust proxy", 1); // Trust first proxy (DigitalOcean/Vercel) for secure
 const server = http.createServer(app);
 
 app.use(cors({
-    origin: ["http://localhost:5173", "https://www.rentyourdate.space", "https://www.rentyourdate.space"],
+    origin: [process.env.CLIENT_URL, "https://www.rentyourdate.space", "https://rentyourdate.space"],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],

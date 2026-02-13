@@ -3,6 +3,9 @@ import User from "../models/User.js";
 // @desc    Verify user
 // @route   POST /api/users/verify
 // @access  Private
+// @desc    Verify user
+// @route   POST /api/users/verify
+// @access  Private
 const verifyUser = async (req, res) => {
     const user = await User.findById(req.user._id);
 
@@ -15,6 +18,7 @@ const verifyUser = async (req, res) => {
             name: updatedUser.name,
             email: updatedUser.email,
             isVerified: updatedUser.isVerified,
+            isAccountVerified: updatedUser.isAccountVerified,
         });
     } else {
         res.status(404);
@@ -41,6 +45,7 @@ const getUserProfile = async (req, res) => {
             phoneNumber: user.phoneNumber,
             profileImage: user.profileImage,
             isVerified: user.isVerified,
+            isAccountVerified: user.isAccountVerified,
         });
     } else {
         res.status(404);
@@ -85,6 +90,7 @@ const updateUserProfile = async (req, res) => {
             phoneNumber: updatedUser.phoneNumber,
             profileImage: updatedUser.profileImage,
             isVerified: updatedUser.isVerified,
+            isAccountVerified: updatedUser.isAccountVerified,
         });
     } else {
         res.status(404);
